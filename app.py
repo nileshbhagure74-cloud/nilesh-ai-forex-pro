@@ -8,6 +8,7 @@ app = Flask(__name__)
 HTML = """
 <!DOCTYPE html>
 <html>
+<script src="https://s3.tradingview.com/tv.js"></script>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>NILESH AI FOREX PRO</title>
@@ -40,6 +41,12 @@ button{background:#1689ee;color:white;font-weight:bold}
 <option value="15m">15 Minutes</option>
 <option value="1h">1 Hour</option>
 </select>
+<div style="margin-top:15px">
+<h3>📈 TradingView Live Chart</h3>
+<div id="tradingview_chart"
+style="height:450px;width:100%;border-radius:12px;overflow:hidden">
+</div>
+</div>
 <button onclick="analyse()">ANALYZE MARKET</button>
 <div id="analysis">Waiting for analysis...</div>
 </div>
@@ -53,6 +60,44 @@ button{background:#1689ee;color:white;font-weight:bold}
 
 <script>
 async function analyse(){
+function loadTradingView(){
+
+ let symbolMap = {
+  "GC=F":"OANDA:XAUUSD",
+  "EURUSD=X":"FX:EURUSD",
+  "GBPUSD=X":"FX:GBPUSD",
+  "USDJPY=X":"FX:USDJPY",
+  "BTC-USD":"BINANCE:BTCUSDT"
+ };
+
+ let symbol = symbolMap[document.getElementById("symbol").value];
+ let tf = document.getElementById("tf").value;
+
+ let intervals = {
+  "5m":"5",
+  "15m":"15",
+  "1h":"60"
+ };
+
+ document.getElementById("tradingview_chart").innerHTML="";
+
+ new TradingView.widget({
+  autosize:true,
+  symbol:symbol,
+  interval:intervals[tf],
+  timezone:"Asia/Kolkata",
+  theme:"dark",
+  style:"1",
+  locale:"en",
+  allow_symbol_change:true,
+  container_id:"tradingview_chart"
+ });
+}
+
+window.addEventListener("load",loadTradingView);
+
+document.getElementById("symbol").addEventListener("change",loadTradingView);
+document.getElementById("tf").addEventListener("change",loadTradingView);
  document.getElementById("analysis").innerText="Analyzing market...";
  let s=document.getElementById("symbol").value;
  let t=document.getElementById("tf").value;
