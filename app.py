@@ -29,7 +29,7 @@ button{background:#1689ee;color:white;font-weight:bold}
 <div class="box">
 <h3>📊 Market Analysis</h3>
 <select id="symbol">
-<option value="XAUUSD=X">Gold XAUUSD</option>
+<option value="GC=F">Gold XAUUSD (Futures)</option>
 <option value="EURUSD=X">EURUSD</option>
 <option value="GBPUSD=X">GBPUSD</option>
 <option value="USDJPY=X">USDJPY</option>
